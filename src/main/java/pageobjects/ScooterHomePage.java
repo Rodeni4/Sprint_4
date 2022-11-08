@@ -1,3 +1,5 @@
+package pageobjects;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -5,7 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-class HomePageScooter {
+public class ScooterHomePage {
+    private final String linkHomePage = "https://qa-scooter.praktikum-services.ru/";
     private WebDriver driver;
 
     // локатор для элемента 'вопросы о важном'
@@ -21,28 +24,35 @@ class HomePageScooter {
     private By topButtonOrder = By.xpath(".//button[@class='Button_Button__ra12g'] ");
 
     // локатор для верхней кнопки заказать
-    private By  bottomButtonOrder = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM'] ");
+    private By bottomButtonOrder = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM'] ");
 
-    public HomePageScooter(WebDriver driver) {
+    // конструктор класса
+    public ScooterHomePage(WebDriver driver) {
         this.driver = driver;
+    }
+
+    // метод для переход на страницу тестового приложения
+    public void openGetHomePage() {
+        driver.get(linkHomePage);
     }
 
     // метод для прокрутки до элемента 'вопросы о важном'
     public void scrollQuestionsImportant() {
         WebElement element = driver.findElement(questionsImportant);
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
     }
 
     // метод для нажатия на стрелочку элемента аккордеона
     public void clickAccordionArrow(int number) {
-        if (number >= 1 ) {
+        if (number >= 1) {
             elementAccordion = By.id("accordion__heading-" + (number - 1));
         }
         driver.findElement(elementAccordion).click();
     }
+
     // метод для проверки появления соответствующего текста
     public void waitTextAppear(String textAccordion, int number) {
-        if (number >= 1 ) {
+        if (number >= 1) {
             elementTextAccordion = By.id("accordion__panel-" + (number - 1));
         }
         new WebDriverWait(driver, 3)
@@ -56,12 +66,12 @@ class HomePageScooter {
 
     // метод для нажатия на нижнию кнопку заказать
     public void clickBottomButtonOrder() {
-        driver.findElement( bottomButtonOrder).click();
+        driver.findElement(bottomButtonOrder).click();
     }
 
     // метод для прокрутки до нижней кнопки Заказать
     public void scrollBottomButtonOrder() {
         WebElement element = driver.findElement(bottomButtonOrder);
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
     }
 }

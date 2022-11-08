@@ -1,8 +1,10 @@
+package pageobjects;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class OrderPageScooter {
+public class ScooterOrderPage {
     private WebDriver driver;
 
     // локатор для поля Имя
@@ -50,34 +52,35 @@ public class OrderPageScooter {
     // локатор для ообщениея об успешном создании заказа
     private By textMessage = By.xpath(".//div[@class='Order_ModalHeader__3FDaJ']");
 
-    public OrderPageScooter(WebDriver driver) {
+    // конструктор класса
+    public ScooterOrderPage(WebDriver driver) {
         this.driver = driver;
     }
 
     // метод для заполнения поля * Имя
-    public void sendNameInput() {
-        driver.findElement(nameInputField).sendKeys("Сергей");
+    public void sendNameInput(String name) {
+        driver.findElement(nameInputField).sendKeys(name);
     }
 
     // метод для заполнения поля * Фамилия
-    public void sendSurnameInput() {
-        driver.findElement(surnameInputField).sendKeys("Роденко");
+    public void sendSurnameInput(String surname) {
+        driver.findElement(surnameInputField).sendKeys(surname);
     }
 
     // метод для заполнения поля * Адрес
-    public void sendAddressInput() {
-        driver.findElement(addressInputField).sendKeys("ул. Ленина д. 1 кв. 1");
+    public void sendAddressInput(String address) {
+        driver.findElement(addressInputField).sendKeys(address);
     }
 
     // метод для заполнения поля * Телефон
-    public void sendPhoneInput() {
-        driver.findElement(phoneInputField).sendKeys("89132995050");
+    public void sendPhoneInput(String phone) {
+        driver.findElement(phoneInputField).sendKeys(phone);
     }
 
     // метод для заполнения станции метро
-    public void sendMetroStationInput() {
+    public void sendMetroStationInput(String metroStations) {
         driver.findElement(metroStationInputField).click();
-        driver.findElement(metroStationInputField).sendKeys("Соколиная Гора");
+        driver.findElement(metroStationInputField).sendKeys(metroStations);
         driver.findElement(metroStationSelect).click();
     }
 
@@ -87,25 +90,25 @@ public class OrderPageScooter {
     }
 
     // метод для заполнения поля * Когда
-    public void sendWhenInput() {
-        driver.findElement(whenInputField).sendKeys("31.12.2022");
+    public void sendWhenInput(String whenDate) {
+        driver.findElement(whenInputField).sendKeys(whenDate);
         driver.findElement(whenInputField).sendKeys(Keys.ENTER);
     }
 
     // метод для заполнения поля * Срок аренды
-    public void sendRentalPeriodInput() {
+    public void sendRentalPeriodSevenDaysInput() {
         driver.findElement(pentalPeriodInputField).click();
         driver.findElement(pentalPeriodInput).click();
     }
 
     // метод для выбора цвета
-    public void sendСolourInput() {
+    public void sendColourBlackInput() {
         driver.findElement(colourField).click();
     }
 
     // метод для коментария курьеру
-    public void sendCourierCommentInput() {
-        driver.findElement(courierCommentField).sendKeys("шире шаг почтальон!");
+    public void sendCourierCommentInput(String commentCourier) {
+        driver.findElement(courierCommentField).sendKeys(commentCourier);
     }
 
     // метод нажатия кнопки Заказать
@@ -121,7 +124,23 @@ public class OrderPageScooter {
     // метод для проверки появления сообщениея об успешном создании заказа
     public void waitTextAppear(String textExpected) {
         new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.textToBePresentInElementLocated(textMessage,  textExpected));
+                .until(ExpectedConditions.textToBePresentInElementLocated(textMessage, textExpected));
     }
 
+    // метод заполнения полей на первой странице
+    public void fillingFieldsFirstPage(String name, String surname, String address, String phone, String metroStations) {
+        sendNameInput(name);
+        sendSurnameInput(surname);
+        sendAddressInput(address);
+        sendPhoneInput(phone);
+        sendMetroStationInput(metroStations);
+    }
+
+    // метод заполнения полей на второй странице
+    public void fillingFieldsSecondPage(String whenDate, String commentCourier) {
+        sendWhenInput(whenDate);
+        sendRentalPeriodSevenDaysInput();
+        sendColourBlackInput();
+        sendCourierCommentInput(commentCourier);
+    }
 }
